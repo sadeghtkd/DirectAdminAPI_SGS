@@ -15,4 +15,9 @@ pip install DirectAdminAPI-SGS-shohani
     users = da_users['users']
     for key in users:
         print(users[key])
+    
+    #search recursively for test.txt in root path
+    da_files = api.search_files( '/','test.txt' , recursive=True)
+    for key in da_files:
+        print(da_files[key])
 ```

@@ -1,0 +1,18 @@
+import os
+import sys
+import inspect
+
+currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parentdir = os.path.dirname(currentdir)
+sys.path.insert(0, parentdir) 
+
+
+from src.DirectAdminAPI_SGS_shohani.api import PrettyAPI
+from getpass import getpass
+
+api = PrettyAPI(username=input("admin_da_user:"),password=getpass("admin_da_pwd:"),server=input("Enter DA url:"),json=True)
+
+da_files = api.search_files(input('Enter path to list files:'),'a.txt' , recursive=True)
+
+for key in da_files:
+    print(da_files[key])

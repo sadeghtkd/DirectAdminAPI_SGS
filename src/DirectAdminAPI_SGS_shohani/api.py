@@ -78,7 +78,7 @@ class API(object):
         if self.json:
             params['json'] = 'yes'
 
-        if params['GET_METHOD'] :
+        if 'GET_METHOD' in params :
             response = requests.get(
                 url='{}/{}'.format(self.server, command),
                 auth=(self.username, self.password),
@@ -145,7 +145,7 @@ class PrettyAPI(API):
         )
 
     def remove_user(self, username):
-        '''A pretty wrapper to remove a user'''
+        '''Remove a user'''
         return self.cmd_select_users(
             confirmed='Confirm',
             delete='yes',
@@ -153,10 +153,46 @@ class PrettyAPI(API):
         )
 
     def get_protected_directory_users(self, path):
-        '''A wrapper to get protected directory users list'''
+        '''Get protected directory users list'''
         return self.cmd_file_manager(
             action='protect',
             path=path,            
             ipp=500 ,#item per page
             GET_METHOD = True
         )
+
+    def get_files_list(self, domain):
+        '''Get files and directories list'''
+        return self.cmd_api_file_manager(
+            domain=domain,
+             GET_METHOD = True
+        )
+
+    def get_folders_by_path(self, path):
+        '''Get directories list'''
+        return self.cmd_api_file_manager(
+            action='parent_tree',
+             path = path,
+             GET_METHOD = True
+        )
+
+    def search_files(self, path , value , recursive=False):
+        '''Search for files or folders'''
+        if recursive:
+            return self.cmd_api_file_manager(
+                action='recursive_search',
+                path = path,
+                search=value,
+                type='all',
+                GET_METHOD = True
+            ) 
+        else:
+            return self.cmd_api_file_manager(
+                action='json_all',
+                path = path,
+                page='1',
+                comparison6='contains',
+                value6=value,
+                ipp=500 ,#item per page
+                GET_METHOD = True
+            )        
