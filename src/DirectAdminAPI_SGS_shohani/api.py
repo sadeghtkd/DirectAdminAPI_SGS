@@ -196,3 +196,50 @@ class PrettyAPI(API):
                 ipp=500 ,#item per page
                 GET_METHOD = True
             )        
+
+    def enable_letsencrypt_ssl(self, domain,name,email,domains,wildcard="no"):
+        '''Enable free SSL '''
+        if type(domains) != list:
+            raise Exception("Domains must be a list of domains")
+    
+        keys =  ['le_select{}'.format(i) for i in range(len(domains))]
+
+        domains_dict = dict(zip(keys,domains ))
+        return self.cmd_api_ssl(
+                action='save',
+                domain=domain,
+                type='create',
+                request='letsencrypt',
+                acme_provider="letsencrypt",
+                name=name,
+                email=email,
+                keysize='secp384r1',
+                encryption='sha256',
+                wildcard=wildcard,
+                **domains_dict
+        )
+
+    def enable_ssl(self, domain):
+        '''Enable SSL for a domain '''        
+        return self.cmd_api_domain(
+                action='modify',
+                domain=domain,
+                only_affect='ssl',
+                ssl="ON"
+        )
+
+    def disable_ssl(self, domain):
+        '''Disable SSL for a domain '''        
+        return self.cmd_api_domain(
+                action='modify',
+                domain=domain,
+                only_affect='ssl'
+        )
+
+    def get_ssl_certificates(self, domain):
+        '''Get ssl certificates'''
+        return self.cmd_api_ssl(
+            domain=domain,
+            dnsproviders='no',
+            GET_METHOD = True
+        )
