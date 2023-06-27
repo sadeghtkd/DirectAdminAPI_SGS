@@ -243,3 +243,12 @@ class PrettyAPI(API):
             dnsproviders='no',
             GET_METHOD = True
         )
+    
+    def get_all_users_with_quota(self):
+        '''Get protected directory users list'''
+        return self.cmd_all_user_show(
+            page=1,            
+            ipp=1000 ,#item per page
+            bytes='yes',
+            GET_METHOD = True
+        )
