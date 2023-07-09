@@ -21,8 +21,8 @@ api = PrettyAPI(username=input("admin_da_user:"),password=getpass("admin_da_pwd:
 
 #for key in da_files:
     #print(da_files[key])
-#res = api.get_user_domains('sadegh')
-#print(res["domains"])
+res = api.get_domains()
+print(res)
 
 res = api.get_user_dns('ghanbari.ir')
 print(res)

@@ -253,6 +253,15 @@ class PrettyAPI(API):
             GET_METHOD = True
         )
 
+    def get_domains(self):
+        '''Get protected directory users list'''
+        return self.CMD_ADDITIONAL_DOMAINS(
+            page=1,     
+            ipp=1000 ,#item per page
+            bytes='yes',
+            GET_METHOD = True
+        )  
+
     def get_user_domains(self, user):
         '''Get protected directory users list'''
         return self.CMD_API_SHOW_USER_DOMAINS(
@@ -273,3 +282,5 @@ class PrettyAPI(API):
             ttl='yes',
             domain=domain
         )
+
+    
