@@ -252,3 +252,24 @@ class PrettyAPI(API):
             bytes='yes',
             GET_METHOD = True
         )
+
+    def get_user_domains(self, user):
+        '''Get protected directory users list'''
+        return self.CMD_API_SHOW_USER_DOMAINS(
+            page=1,     
+            user=user,       
+            ipp=1000 ,#item per page
+            bytes='yes',
+            GET_METHOD = True
+        )        
+
+    def get_user_dns_records(self, domain):
+        '''Get protected directory users list'''
+        return self.CMD_DNS_CONTROL(
+            page=1,            
+            ipp=1000 ,#item per page
+            GET_METHOD = True,
+            full_mx_records='yes',
+            ttl='yes',
+            domain=domain
+        )
