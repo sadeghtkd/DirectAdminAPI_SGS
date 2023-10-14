@@ -202,7 +202,10 @@ class PrettyAPI(API):
         if type(domains) != list:
             raise Exception("Domains must be a list of domains")
     
-        keys =  ['le_select{}'.format(i) for i in range(len(domains))]
+        key_sel = 'le_select'
+        if wildcard=='yes':
+            key_sel = 'le_wc_select'
+        keys =  [key_sel+'{}'.format(i) for i in range(len(domains))]
 
         domains_dict = dict(zip(keys,domains ))
         return self.cmd_api_ssl(
